@@ -32,7 +32,7 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Writ
 
 	@Override
 	public ReadableContainer<ByteBuffer> getReadable() throws IOException {
-		ReadableContainer<ByteBuffer> cloned = container.clone();
+		ReadableContainer<ByteBuffer> cloned = container.duplicate(true);
 		cloned.close();
 		return cloned;
 	}
