@@ -1,5 +1,6 @@
 package be.nabu.libs.resources.memory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,7 +24,7 @@ public class MemoryDirectory extends MemoryResource implements ManageableContain
 	}
 	
 	public Collection<MemoryResource> getChildren() {
-		return children.values();
+		return new ArrayList<MemoryResource>(children.values());
 	}
 
 	@Override
@@ -39,10 +40,12 @@ public class MemoryDirectory extends MemoryResource implements ManageableContain
 	@Override
 	public MemoryResource create(String name, String contentType) {
 		MemoryResource resource;
-		if (contentType.equals(CONTENT_TYPE_DIRECTORY))
+		if (contentType.equals(CONTENT_TYPE_DIRECTORY)) {
 			resource = new MemoryDirectory(name);
-		else
+		}
+		else {
 			resource = new MemoryItem(name);
+		}
 		children.put(name, resource);
 		resource.setParent(this);
 		return resource;
