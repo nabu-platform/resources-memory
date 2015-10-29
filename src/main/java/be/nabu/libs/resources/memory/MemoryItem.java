@@ -7,6 +7,7 @@ import be.nabu.libs.resources.api.FiniteResource;
 import be.nabu.libs.resources.api.ReadableResource;
 import be.nabu.libs.resources.api.TimestampedResource;
 import be.nabu.libs.resources.api.WritableResource;
+import be.nabu.utils.io.IOUtils;
 import be.nabu.utils.io.api.ByteBuffer;
 import be.nabu.utils.io.api.ReadableContainer;
 import be.nabu.utils.io.api.WritableContainer;
@@ -34,7 +35,7 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Writ
 	public ReadableContainer<ByteBuffer> getReadable() throws IOException {
 		ReadableContainer<ByteBuffer> cloned = container.duplicate(true);
 		cloned.close();
-		return cloned;
+		return IOUtils.bufferReadable(cloned, IOUtils.newByteBuffer(4096, true));
 	}
 
 	@Override
