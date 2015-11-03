@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import be.nabu.libs.resources.ResourceUtils;
+import be.nabu.libs.resources.api.Resource;
 import be.nabu.libs.resources.api.ResourceResolver;
-import be.nabu.libs.resources.api.ResourceRoot;
 
 /**
  * Important to remember that by default the memory provider is "empty"
@@ -19,8 +19,8 @@ public class MemoryResourceResolver implements ResourceResolver {
 	private MemoryDirectory root = new MemoryDirectory();
 	
 	@Override
-	public ResourceRoot getResource(URI uri, Principal principal) throws IOException {
-		return (ResourceRoot) ResourceUtils.resolve(root, uri.getPath());
+	public Resource getResource(URI uri, Principal principal) throws IOException {
+		return ResourceUtils.resolve(root, uri.getPath());
 	}
 	
 	@Override
