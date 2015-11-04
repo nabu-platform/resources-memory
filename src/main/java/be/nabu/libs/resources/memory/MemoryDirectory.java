@@ -38,7 +38,7 @@ public class MemoryDirectory extends MemoryResource implements ManageableContain
 	}
 
 	@Override
-	public MemoryResource create(String name, String contentType) {
+	public synchronized MemoryResource create(String name, String contentType) {
 		MemoryResource resource;
 		if (contentType.equals(CONTENT_TYPE_DIRECTORY)) {
 			resource = new MemoryDirectory(name);
@@ -52,7 +52,7 @@ public class MemoryDirectory extends MemoryResource implements ManageableContain
 	}
 
 	@Override
-	public void delete(String name) {
+	public synchronized void delete(String name) {
 		children.remove(name);
 	}
 
