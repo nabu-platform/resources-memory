@@ -3,6 +3,7 @@ package be.nabu.libs.resources.memory;
 import java.io.IOException;
 import java.util.Date;
 
+import be.nabu.libs.resources.api.AccessTrackingResource;
 import be.nabu.libs.resources.api.FiniteResource;
 import be.nabu.libs.resources.api.ReadableResource;
 import be.nabu.libs.resources.api.TimestampedResource;
@@ -13,10 +14,11 @@ import be.nabu.utils.io.api.ReadableContainer;
 import be.nabu.utils.io.api.WritableContainer;
 import be.nabu.utils.io.buffers.bytes.DynamicByteBuffer;
 
-public class MemoryItem extends MemoryResource implements ReadableResource, WritableResource, FiniteResource, TimestampedResource {
+public class MemoryItem extends MemoryResource implements ReadableResource, WritableResource, FiniteResource, TimestampedResource, AccessTrackingResource {
 
 	private DynamicByteBuffer container = new DynamicByteBuffer();
-
+	private Date lastAccessed = new Date();
+	
 	public MemoryItem(String name) {
 		super(name);
 		container.mark();
@@ -33,6 +35,7 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Writ
 
 	@Override
 	public ReadableContainer<ByteBuffer> getReadable() throws IOException {
+		lastAccessed = new Date();
 		ReadableContainer<ByteBuffer> cloned = container.duplicate(true);
 		cloned.close();
 		return IOUtils.bufferReadable(cloned, IOUtils.newByteBuffer(4096, true));
@@ -46,5 +49,10 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Writ
 	@Override
 	public Date getLastModified() {
 		return container.getLastModified();
+	}
+
+	@Override
+	public Date getLastAccessed() {
+		return lastAccessed; 
 	}
 }
