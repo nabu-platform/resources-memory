@@ -1,16 +1,17 @@
 package be.nabu.libs.resources.memory;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import be.nabu.libs.resources.ResourceUtils;
+import be.nabu.libs.resources.api.LocatableResource;
 import be.nabu.libs.resources.api.Resource;
 import be.nabu.libs.resources.api.ResourceContainer;
-import be.nabu.libs.resources.api.ResourceRoot;
 import be.nabu.utils.io.ContentTypeMap;
 
-public class MemoryResource implements Resource, ResourceRoot {
+public class MemoryResource implements Resource, Closeable, LocatableResource {
 
 	private String name;
 	private ResourceContainer<?> parent;
