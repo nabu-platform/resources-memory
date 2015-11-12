@@ -13,6 +13,8 @@ import be.nabu.libs.resources.api.ResourceContainer;
 import be.nabu.libs.resources.api.WritableResource;
 import be.nabu.utils.io.ContentTypeMap;
 import be.nabu.utils.io.IOUtils;
+import be.nabu.utils.io.api.ByteBuffer;
+import be.nabu.utils.io.api.WritableContainer;
 import junit.framework.TestCase;
 
 public class TestMemory extends TestCase {
@@ -24,7 +26,9 @@ public class TestMemory extends TestCase {
 		root = ResourceUtils.mkdir(uri, null);
 		assertNotNull(root);
 		Resource test = ((ManageableContainer<?>) root).create("test.txt", ContentTypeMap.getInstance().getContentTypeFor("test.txt"));
-		((WritableResource) test).getWritable().write(IOUtils.wrap("testing this!".getBytes(), true));
+		WritableContainer<ByteBuffer> writable = ((WritableResource) test).getWritable();
+		writable.write(IOUtils.wrap("testing this!".getBytes(), true));
+		writable.close();
 		assertEquals("testing this!", new String(IOUtils.toBytes(((ReadableResource) test).getReadable())));
 		((ManageableContainer<?>) root).delete("test.txt");
 		assertNull(ResourceUtils.resolve(root, "test.txt"));

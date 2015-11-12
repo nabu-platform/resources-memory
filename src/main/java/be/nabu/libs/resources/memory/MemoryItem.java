@@ -19,6 +19,7 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Writ
 
 	private DynamicByteBuffer container = new DynamicByteBuffer();
 	private Date lastAccessed = new Date();
+	private long maxSize;
 	
 	public MemoryItem(String name) {
 		this(name, 0);
