@@ -57,4 +57,9 @@ public class MemoryResource implements Resource, Closeable, LocatableResource {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return getURI().toString();
+	}
 }
