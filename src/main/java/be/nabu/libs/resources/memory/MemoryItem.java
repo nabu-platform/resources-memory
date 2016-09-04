@@ -17,6 +17,7 @@ import be.nabu.utils.io.buffers.bytes.DynamicByteBuffer;
 
 public class MemoryItem extends MemoryResource implements ReadableResource, AppendableResource, FiniteResource, TimestampedResource, AccessTrackingResource {
 
+	private static final int BUFFER_SIZE = 8192;
 	private DynamicByteBuffer container = new DynamicByteBuffer();
 	private Date lastAccessed = new Date();
 	private long maxSize;
@@ -40,7 +41,7 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Appe
 		WritableContainer<ByteBuffer> target = maxSize > 0
 			? IOUtils.limitWritable(container, maxSize)
 			: container;
-		return IOUtils.bufferWritable(target, ByteBufferFactory.getInstance().newInstance(4096, true));
+		return IOUtils.bufferWritable(target, ByteBufferFactory.getInstance().newInstance(BUFFER_SIZE, true));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Appe
 		lastAccessed = new Date();
 		ReadableContainer<ByteBuffer> cloned = container.duplicate(true);
 		cloned.close();
-		return IOUtils.bufferReadable(cloned, IOUtils.newByteBuffer(4096, true));
+		return IOUtils.bufferReadable(cloned, IOUtils.newByteBuffer(BUFFER_SIZE, true));
 	}
 
 	@Override
@@ -73,6 +74,6 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Appe
 		WritableContainer<ByteBuffer> target = maxSize > 0
 			? IOUtils.limitWritable(container, maxSize)
 			: container;
-		return IOUtils.bufferWritable(target, ByteBufferFactory.getInstance().newInstance(4096, true));
+		return IOUtils.bufferWritable(target, ByteBufferFactory.getInstance().newInstance(BUFFER_SIZE, true));
 	}
 }
