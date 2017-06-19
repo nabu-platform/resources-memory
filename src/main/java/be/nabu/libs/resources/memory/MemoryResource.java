@@ -49,7 +49,7 @@ public class MemoryResource implements Resource, Closeable, LocatableResource {
 	}
 
 	@Override
-	public URI getURI() {
+	public URI getUri() {
 		try {
 			return new URI("memory:" + ResourceUtils.getPath(this));
 		}
@@ -60,6 +60,6 @@ public class MemoryResource implements Resource, Closeable, LocatableResource {
 	
 	@Override
 	public String toString() {
-		return getURI().toString();
+		return getUri().toString();
 	}
 }
