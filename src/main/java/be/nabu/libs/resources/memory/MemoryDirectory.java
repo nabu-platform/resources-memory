@@ -61,4 +61,7 @@ public class MemoryDirectory extends MemoryResource implements ManageableContain
 		return getChildren().iterator();
 	}
 
+	public MemoryReadOnlyDirectory toReadOnly() {
+		return new MemoryReadOnlyDirectory(this);
+	}
 }

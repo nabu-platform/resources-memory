@@ -76,4 +76,8 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Appe
 			: container;
 		return IOUtils.bufferWritable(target, ByteBufferFactory.getInstance().newInstance(BUFFER_SIZE, true));
 	}
+	
+	public MemoryReadOnlyItem toReadOnly() {
+		return new MemoryReadOnlyItem(this);
+	}
 }
