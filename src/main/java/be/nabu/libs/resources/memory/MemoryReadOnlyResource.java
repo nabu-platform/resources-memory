@@ -13,7 +13,7 @@ public class MemoryReadOnlyResource<R extends MemoryResource> extends MemoryReso
 
 	@Override
 	public ResourceContainer<?> getParent() {
-		return (ResourceContainer<?>) wrap(item);
+		return item.getParent() instanceof MemoryResource ? (ResourceContainer<?>) wrap((MemoryResource) item.getParent()) : item.getParent();
 	}
 
 	@Override
