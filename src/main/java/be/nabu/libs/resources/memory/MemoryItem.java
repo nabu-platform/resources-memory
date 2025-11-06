@@ -83,6 +83,17 @@ public class MemoryItem extends MemoryResource implements ReadableResource, Appe
 	public Date getLastAccessed() {
 		return lastAccessed; 
 	}
+	
+	public void write(byte [] content) {
+		try {
+			container.reopen();
+			container.truncate();
+			container.write(content);
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	@Override
 	public WritableContainer<ByteBuffer> getAppendable() throws IOException {
